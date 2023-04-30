@@ -11,11 +11,11 @@ spec:
           image: confluentinc/cp-kafka:6.1.1
           env:
             - name: KAFKA_BOOTSTRAP_SERVERS
-              value: "kafka:29092"
+              value: "kafka-service:29092"
           command: ["/bin/sh", "-c"]
           args:
             - |
-              kafka-topics --bootstrap-server kafka:29092 --list
+              kafka-topics --bootstrap-server kafka-service:29092 --list
               echo -e 'Creating kafka topics'
               kafka-topics --bootstrap-server kafka:29092 --create --if-not-exists --topic orders --replication-factor 1 --partitions 1
               echo -e 'Successfully created the following topics:'
