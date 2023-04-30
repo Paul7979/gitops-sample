@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: schema-registry
+  name: avro
 spec:
   selector:
-    app: schema-registry
+    app: avro
   ports:
     - name: http
       protocol: TCP
@@ -14,19 +14,19 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: schema-registry
+  name: avro
 spec:
   selector:
     matchLabels:
-      app: schema-registry
+      app: avro
   replicas: 1
   template:
     metadata:
       labels:
-        app: schema-registry
+        app: avro
     spec:
       containers:
-        - name: schema-registry
+        - name: avro
           image: confluentinc/cp-schema-registry:7.1.1
           ports:
             - containerPort: 8081
