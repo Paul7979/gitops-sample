@@ -6,14 +6,14 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: kafka
+      app: kafka-service
   template:
     metadata:
       labels:
-        app: kafka
+        app: kafka-service
     spec:
       containers:
-        - name: kafka
+        - name: kafka-service
           image: confluentinc/cp-kafka:6.1.1
           ports:
             - containerPort: 9092
@@ -26,7 +26,7 @@ spec:
             - name: KAFKA_INTER_BROKER_LISTENER_NAME
               value: PLAINTEXT
             - name: KAFKA_ADVERTISED_LISTENERS
-              value: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+              value: PLAINTEXT://kafka-service:29092,PLAINTEXT_HOST://localhost:9092
             - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
               value: "1"
             - name: KAFKA_MIN_INSYNC_REPLICAS
@@ -35,10 +35,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: kafka
+  name: kafka-service
 spec:
   selector:
-    app: kafka
+    app: kafka-service
   ports:
     - name: kafka-external
       port: 9092
