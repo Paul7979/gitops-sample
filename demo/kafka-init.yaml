@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: init-kafka
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: init-kafka
+          image: confluentinc/cp-kafka:6.1.1
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: "kafka:29092"
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              kafka-topics --bootstrap-server kafka:29092 --list
+              echo -e 'Creating kafka topics'
+              kafka-topics --bootstrap-server kafka:29092 --create --if-not-exists --topic orders --replication-factor 1 --partitions 1
+              echo -e 'Successfully created the following topics:'
+              kafka-topics --bootstrap-server kafka:29092 --list
